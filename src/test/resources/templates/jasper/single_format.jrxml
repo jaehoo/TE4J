@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1"/>
+	<parameter name="name" class="java.lang.String"/>
+	<parameter name="birthday" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="rfc" class="java.lang.String"/>
+	<parameter name="nationality" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="colony" class="java.lang.String"/>
+	<parameter name="poblation" class="java.lang.String"/>
+	<parameter name="estate" class="java.lang.String"/>
+	<parameter name="zipCode" class="java.lang.Integer"/>
+	<parameter name="telephone" class="java.lang.String"/>
+	<parameter name="college" class="java.lang.String"/>
+	<parameter name="institute" class="java.lang.String"/>
+	<parameter name="dateIn" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="position" class="java.lang.String"/>
+	<parameter name="nomina" class="java.lang.String"/>
+	<parameter name="jobEmail" class="java.lang.String"/>
+	<parameter name="figure" class="java.lang.String"/>
+	<parameter name="dateExam" class="java.util.Date">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idAbm" class="java.lang.Long"/>
+	<parameter name="headerSingleFormat" class="java.lang.String"/>
+	<parameter name="bgSingleFormat" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="142"/>
+				<imageExpression><![CDATA[$P{headerSingleFormat}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="50" y="280" width="469" height="265"/>
+				<imageExpression><![CDATA[$P{bgSingleFormat}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="142" width="555" height="19"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS PERSONALES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="187" width="44" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="217" width="115" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Fecha de nacimiento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="96" y="187" width="449" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{name}==null)? "" : $P{name})]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="158" y="217" width="387" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{birthday}==null) ? "" : $P{birthday})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="42" y="249" width="34" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[RFC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="769" width="100" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Correo electrónico:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="739" width="82" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[No. de nómina:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="709" width="45" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Puesto:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="674" width="100" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Fecha de ingreso:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="639" width="164" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Institución para la que labora:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="609" width="132" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información laboral]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="578" width="144" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Grado máximo de estudios:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="545" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[FORMACIÓN ACADEMICA Y PROFESIONAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="493" width="116" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Teléfono (con LADA):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="459" width="22" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[CP:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="422" width="44" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Estado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="385" width="131" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Delegación o Municipio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="354" width="44" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Colonia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="316" width="64" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Calle y No.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="281" width="81" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Nacionalidad:]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="797" width="544" height="1"/>
+			</break>
+			<textField>
+				<reportElement x="123" y="281" width="422" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{nationality}==null) ? "" : $P{nationality})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="316" width="440" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{address}==null) ? "" : $P{address})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="354" width="459" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{colony}==null) ? "" : $P{colony})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="173" y="385" width="372" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{poblation}==null) ? "" : $P{poblation})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="422" width="459" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{estate}==null) ? "" : $P{estate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="459" width="298" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{zipCode}==null) ? "" : $P{zipCode})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="493" width="388" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{telephone}==null) ? "" : $P{telephone})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="578" width="359" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{college}==null) ? "" : $P{college})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="204" y="639" width="340" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{institute}==null) ? "" : $P{institute})]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="141" y="674" width="403" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{dateIn}==null) ? "" : $P{dateIn})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="709" width="459" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{position}==null) ? "" : $P{position})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="122" y="739" width="291" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{nomina}==null) ? "" : $P{nomina})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="769" width="403" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{jobEmail}==null) ? "" : $P{jobEmail})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="76" y="249" width="469" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{rfc}==null) ? "" : $P{rfc})]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="801">
+			<image>
+				<reportElement x="60" y="290" width="469" height="265"/>
+				<imageExpression><![CDATA[$P{bgSingleFormat}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="18" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CERTIFICACIÓN DE LA CAPACIDAD TÉCNICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="53" width="361" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Figura en la que se pretende obtener la certificación y/o autorización:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="236" width="488" height="41" forecolor="#727272"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Por medio del presente otorgo mi consentimiento a la Asociación de Bancos de México, A.C. (ABM) para realizar consultas de manera electrónica a Buró de Crédito sobre mi historial Crediticio.
+Declaro bajo protesta de decir verdad que:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="199" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DECLARATIVAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="152" width="131" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[No. único de certificación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="112" width="100" height="15" forecolor="#727272"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Fecha de examen:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="53" y="290" width="469" height="11" forecolor="#727272"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ · La información anteriormente mencionada, así como la documentación adjunta es verdadera.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="53" y="309" width="469" height="27" forecolor="#727272"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ · Autorizo a la Asociación para que en mi nombre y representación lleve a cabo ante la Comisión Nacional Bancaria y de Valores los trámites necesarios para obtener mi autorización como:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="53" y="355" width="465" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="53" y="364" width="469" height="130" forecolor="#727272"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="9" isBold="false"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[· No haber sido condenado por sentencia irrevocable por delito doloso que imponga pena por más de un año de prisión, ni por delitos patrimoniales cometidos de forma dolosa.
+· No estar inhabilitado o suspendido administrativamente ni penalmente para ejercer el comercio o para desempeñar un cargo, empleo o comisión, en el servicio público o en el sistema financiero mexicano.
+· No haber sido declarado en concurso civil o mercantil sin ser rehabilitado.
+· No estar sujeto a proceso penal.
+· No tener litigio pendiente en contra de]]></text>
+			</staticText>
+			<line>
+				<reportElement x="53" y="514" width="465" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="53" y="525" width="469" height="31" forecolor="#727272"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="9" isBold="false"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[ que forman parte del grupo financiero al que éste pertenece.
+· No tener conflictos de interés o interés opuesto al de ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="53" y="577" width="465" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="53" y="586" width="469" height="53" forecolor="#727272"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="9" isBold="false"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[ni contra las sociedades que forman parte del grupo financiero al que éste pertenece.
+· No haber sido sujeto de algún procedimiento administrativo o penal que concluyera por perdón o convenio que implique la aceptación de la culpa o responsabilidad.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="745" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTACIÓN ADICIONAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="116" y="693" width="350" height="1"/>
+			</line>
+			<line>
+				<reportElement x="4" y="775" width="544" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="781" width="555" height="9" forecolor="#919191"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASOCIACIÓN DE BANCOS DE MÉXICO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="116" y="698" width="350" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{name}==null) ? "" : $P{name})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="55" y="81" width="489" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{figure}==null) ? "" : $P{figure})]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="141" y="112" width="403" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{dateExam}==null)? "" : $P{dateExam})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="172" y="152" width="372" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{idAbm}==null) ? "" : $P{idAbm})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="339" width="433" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{figure}==null) ? "" : $P{figure})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="498" width="435" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{institute}==null) ? "Alguna de las instituciones." : $P{institute})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="561" width="435" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($P{institute}==null) ? "Alguna de las instituciones." : $P{institute})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns    ="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p  ="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- @author: Lic. José Alberto Sánchez González
+
+        ..:: Example configuration file ::..
+    -->
+
+    <!-- Jasper Report Engine -->
+    <bean id="service.jasperEngine"
+          class="com.oz.control.service.impl.JasperReportTemplateEngine"
+            p:useDefaultPaths="true"
+            p:defTemplatePath="classpath:templates/jasper/"
+            p:defResourcePath="classpath:images/"/>
+    
+    <bean id="service.beanJasperEngine"
+          class="com.oz.control.service.impl.JasperReportTemplateBeanEngine"
+          p:useDefaultPaths="true"
+          p:defTemplatePath="classpath:templates/jasper/"
+          p:defResourcePath="classpath:images/"/>
+
+    <!-- Velocity Engine template -->
+    <bean id="utils.velocityEngine"
+          class="org.springframework.ui.velocity.VelocityEngineFactoryBean"
+          p:resourceLoaderPath="classpath:templates/velocity/"/>
+    <!-- to test external enviroments file:src/test/templates/velocity/ -->
+
+    <bean id="service.map.utils" class="com.oz.control.service.impl.MapUtilServiceImpl"/>
+
+
+    <!--
+        File readers,
+        add this beans to read XLS an CSV files with Template Engine
+        requires:
+        - ReflectionUtils
+        - Date Formats
+        - Map Uitl Service
+    -->
+
+    <bean id="abstract.reader"
+          lazy-init="true"
+          abstract="true"
+          class="com.oz.control.service.AbstractReaderService"
+          p:mapUtilService-ref="service.map.utils"/>
+
+    <bean id="service.file.excelReader"
+          parent="abstract.reader"
+          class="com.oz.control.service.impl.ExcelReaderService"
+          p:refUtils-ref="util.reflection"/>
+
+    <bean id="service.file.textPlainReader"
+          parent="abstract.reader"
+          class="com.oz.control.service.impl.TextPlainReaderService"
+          p:delimiter="|"
+          p:refUtils-ref="util.reflection"/>
+
+
+    <bean id="util.reflection" class="com.oz.utils.ReflectionUtils"
+          p:dateFormat-ref="util.load.SimpleDateFormat"/>
+
+
+    <!--
+        Date Formats
+
+        Add many formtas as you need, create one per filed, example:
+        - Dates in different formats
+    -->
+
+    <bean id="util.SimplDateFormatCode" class="java.text.SimpleDateFormat">
+        <constructor-arg value="yyMMdd"/>
+    </bean>
+
+    <!-- Formato de fecha para los archivos de carga  -->
+    <bean id="util.load.SimpleDateFormat" class="java.text.SimpleDateFormat" >
+        <constructor-arg value="dd/MM/yyyy"/>
+    </bean>
+
+    <!-- Test Resources String's -->
+    <util:properties id="res.map.test.properties" location="classpath:testValues.properties" />
+
+    <!-- Test Classes -->
+
+
+</beans>

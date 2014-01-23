@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_image_report" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f5832c05-97e9-4427-8a81-9715937b612d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="345"/>
+	<parameter name="image_logo" class="java.lang.String"/>
+	<parameter name="userName" class="java.lang.String"/>
+	<parameter name="IMG_PATH" class="java.lang.String"/>
+	<background>
+		<band height="555" splitType="Stretch">
+			<image>
+				<reportElement uuid="c4b646b2-f9d2-4b10-9003-c89dd07f522a" mode="Opaque" x="353" y="19" width="292" height="227"/>
+				<imageExpression><![CDATA[$P{IMG_PATH}+"logo_oz.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="b836716b-a392-4180-849e-658130263ff2" x="253" y="19" width="317" height="34"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TEST IMAGE REPORT]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="88" splitType="Stretch">
+			<image>
+				<reportElement uuid="089138e5-3213-4726-8115-2e38dba6c784" x="60" y="0" width="99" height="88"/>
+				<imageExpression><![CDATA[$P{image_logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="0dd24625-abad-4e9e-9850-b79669aecacb" x="194" y="0" width="428" height="31"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Insert image into report with parameter (absolute file path)]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="10c01ee9-71a5-4b27-9c40-b401e116a740" x="194" y="31" width="193" height="31"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{userName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<image>
+				<reportElement uuid="c4b646b2-f9d2-4b10-9003-c89dd07f522a" mode="Opaque" x="59" y="0" width="100" height="87"/>
+				<imageExpression><![CDATA[$P{IMG_PATH}+"logo_oz.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="0dd24625-abad-4e9e-9850-b79669aecacb" x="194" y="0" width="428" height="31"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Insert image into report with parameter + image name ]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

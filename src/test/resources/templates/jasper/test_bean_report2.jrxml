@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_bean_report2" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5cd2d262-1f5c-4885-84b9-f9d182771002">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#45678A">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#CFDAE6">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="tableDS" uuid="14cb5cbc-02e6-4cfa-afc1-82aa7aa4e729">
+		<field name="name" class="java.lang.String"/>
+		<field name="id" class="java.lang.Long"/>
+		<field name="password" class="java.lang.String"/>
+		<field name="mail" class="java.lang.String"/>
+	</subDataset>
+	<field name="title" class="java.lang.String"/>
+	<field name="impressDate" class="java.util.Date"/>
+	<field name="users" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="663f3cd2-e8a9-459f-8a5d-f937ba40bd02" x="256" y="22" width="317" height="33"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Dynamic Bean Report 2]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3c865b7c-cc9f-4fb8-8a2f-9cc68cd61b24" x="0" y="0" width="220" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement uuid="ffce41ea-7c50-4efa-a50a-9c5506efd7e0" x="220" y="0" width="208" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{impressDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="64" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="ae871b3b-f991-4617-9367-0d7e400bc644" key="table" style="table" positionType="Float" x="0" y="0" width="683" height="64"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="tableDS" uuid="8cff4bec-ed13-4da7-8176-a28f42de3ac0">
+						<dataSourceExpression><![CDATA[$F{users}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:columnGroup uuid="606fe31d-768c-4066-ac23-cd919a329ebe" width="682">
+						<jr:column uuid="e3a89b85-dd0b-4b06-8862-ef4b114c1ca0" width="90">
+							<jr:tableHeader style="table_TH" height="26" rowSpan="1"/>
+							<jr:tableFooter style="table_TH" height="20" rowSpan="1"/>
+							<jr:columnHeader style="table_CH" height="18" rowSpan="1">
+								<staticText>
+									<reportElement uuid="e58f0572-1f00-47f9-97a8-39aee40c11c4" x="0" y="0" width="90" height="18"/>
+									<textElement textAlignment="Center"/>
+									<text><![CDATA[Id User]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement uuid="4705cc8e-280c-4f02-89b3-3bed1782429d" x="0" y="0" width="90" height="20"/>
+									<textElement/>
+									<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column uuid="0f4a77b7-5134-4acd-bbfd-644b47703771" width="90">
+							<jr:tableHeader style="table_TH" height="26" rowSpan="1"/>
+							<jr:tableFooter style="table_TH" height="20" rowSpan="1"/>
+							<jr:columnHeader style="table_CH" height="18" rowSpan="1">
+								<staticText>
+									<reportElement uuid="2768cfbc-a1d1-4f26-853a-9605c628aae6" x="0" y="0" width="90" height="18"/>
+									<textElement textAlignment="Center"/>
+									<text><![CDATA[User Name]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement uuid="4773c65d-b151-4b24-a806-6849808e886a" x="0" y="0" width="90" height="20"/>
+									<textElement/>
+									<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column uuid="1c39e525-5de5-4e9b-9ec4-9c819c242680" width="90">
+							<jr:tableHeader style="table_TH" height="26" rowSpan="1"/>
+							<jr:tableFooter style="table_TH" height="20" rowSpan="1"/>
+							<jr:columnHeader style="table_CH" height="18" rowSpan="1">
+								<staticText>
+									<reportElement uuid="64e619c8-a5b6-4a8c-8cbe-f332f0d6c7ba" x="0" y="0" width="90" height="18"/>
+									<textElement textAlignment="Center"/>
+									<text><![CDATA[Password]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement uuid="98918850-b2c2-4894-a8bb-c6c7e47d44fe" x="0" y="0" width="90" height="20"/>
+									<textElement/>
+									<textFieldExpression><![CDATA[$F{password}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column uuid="a3f92efd-1452-48e3-bb9b-0afe03d742e5" width="412">
+							<jr:tableHeader style="table_TH" height="26" rowSpan="1"/>
+							<jr:tableFooter style="table_TH" height="20" rowSpan="1"/>
+							<jr:columnHeader style="table_CH" height="18" rowSpan="1">
+								<staticText>
+									<reportElement uuid="7701e565-ddf8-411a-9ef7-fba53716c38d" x="0" y="0" width="300" height="18"/>
+									<textElement textAlignment="Center"/>
+									<text><![CDATA[Email]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table_CH" height="30" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement uuid="c44f60c3-3ce9-4366-bb41-102355cd21cd" x="0" y="0" width="265" height="20"/>
+									<textElement/>
+									<textFieldExpression><![CDATA[$F{mail}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="25" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="30" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

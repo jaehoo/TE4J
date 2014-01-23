@@ -1,0 +1,49 @@
+<html>
+
+
+<style>
+
+    .algo{
+        background: #fafafa;
+    }
+
+    .algo2{
+        background-color: #3399ccc;
+    }
+
+    #name{
+        color: #8b0000;
+        text-decoration: underline;
+    }
+    .container{
+        border: solid 1px #bbb;
+        width: 400px;
+        display: inline-block;
+        border-radius: 3px;
+        padding: 10px;
+    }
+
+    
+</style>
+
+<body class="algo">
+
+<div class="container">
+    <h4>Hi
+        <span id="name">${var1}</span>,<br /> welcome to the Chipping Sodbury On-the-Hill message boards!</h4>
+
+
+    <div>
+
+        Your email address is <a href="mailto:${var2}">${var2}</a>.
+
+        <p><img src='cid:identifier1234'></p>
+
+        =p
+
+    </div>
+</div>
+
+</body>
+
+</html>
