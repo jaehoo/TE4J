@@ -39,72 +39,105 @@ public class MapUtilServiceImplTest extends AbstractJUnit4Test {
     @Resource(name = R_TEST_PROP)
     private Properties testProperties;
 
+
+    /**
+     * Convert JSON String with two or more elements
+     */
     @Test
-    public void testConvertJsonToMap(){
+    public void testMultipleJsonToMap(){
 
-        String[] jsonStrings={
-                "{a:1,b:2, name:'José Alberto',age:26, value:true}"
-                , "{'User':{a:1,b:2, name:'José Alberto',age:26, value:true}}"
-                , "{com.oz.util.BeanMorpherTest:{name:'nombre',ap:'apellido paterno',am:'apellido materno'}}"
-                ,
-                "{"
-                    +"User:{name:'nombre',ap:'apellido paterno',am:'apellido materno'}" +
-                    ",Labi:{age:'edad', date:'fecha',value:'actualizar',createdOn:'fecha registro'}" +
-                "}"
-        };
+        String json="{'User':{a:1,b:2, name:'José Alberto',age:26, value:true},"+" 'Labi':{c:3,d:4}}";
 
-        logger.info(TEST_READY);
-
-        for(String json: jsonStrings){
-
-            Map map=mapUtilService.convertJsonToMap(json);
-            assertNotNull(map);
-            logger.info("Map :{}",map);
-            logger.info("Next Element...");
-        }
+        Map map = mapUtilService.toMap(json);
+        logger.info("map size:{}",map.size());
+        print(map);
 
     }
 
+    /**
+     * Convert Single JSON String with a one element
+     */
     @Test
-    public void testConvertJsonToMap2(){
+    public void testJsonToMap(){
 
-        String[] jsonStrings={
-                "{com.oz.model.dto.PersonDto:"
-                        +"{"
-                        + "name:'nombre',firstName:'apellido paterno',"
-                        +"com.oz.model.dto.AddressDto:{street:'curp'}"
-                        +"}"
-                        +"}"
-        };
 
-        logger.info(TEST_READY);
+        String json="{'user':{name:'José',ap:'Sánchez',am:'GOnzález', " +
+                "age:26, date:'28/12/1985',value:true,createdOn:'28/12/1985'}}";
 
-        Map map= null;
-        for(String json: jsonStrings){
-
-            logger.info(json);
-
-            map=mapUtilService.convertJsonToMap(json);
-            assertNotNull(map);
-            //logger.info("Map :{}",map);
-            logger.info("== Next Element...");
-        }
-
-        printMap(map);
-
+        Map map = mapUtilService.toMap(json);
+        logger.info("map size:{}",map.size());
+        print(map);
 
     }
 
-    @Test
-    public void testConvertJsonToRawMap(){
 
-        Map mapConfig= mapUtilService.convertJsonToRawMap(
+    /**
+     * Try to convert json to map from Resource Properties elements, the elements into map are ordered
+     * @throws Exception if test Fail into process
+     */
+    @Test
+    public void testJsonToMap2() throws Exception {
+
+
+        // Case 1
+
+        String jsonValues=testProperties.getProperty("test.json.map.1");
+        Map srcMap = mapUtilService.toMap(jsonValues);
+
+        logger.info("map src={}",srcMap);
+
+        Map result =mapUtilService.getPositions(srcMap);
+        assertNotNull(result);
+
+        logger.info("result map:{}", result);
+        logger.info("******************");
+
+
+        // Case 2
+        jsonValues=testProperties.getProperty("test.json.map.2");
+        srcMap = mapUtilService.toMap(jsonValues);
+
+        logger.info("map src={}",srcMap);
+
+        result =mapUtilService.getPositions(srcMap);
+        assertNotNull(result);
+
+        logger.info("result map:{}", result);
+        logger.info("******************");
+
+    }
+
+
+
+    /**
+     * Convert Single JSON String with a one element
+     */
+    @Test
+    public void testJsonToDynaBeanMap(){
+
+
+        String json="{'user':{name:'José',ap:'Sánchez',am:'GOnzález', " +
+                "age:26, date:'28/12/1985',value:true,createdOn:'28/12/1985'}}";
+
+        Map map = mapUtilService.toDynaBeanMap(json);
+        logger.info("map size:{}",map.size());
+        print(map);
+
+    }
+
+    /**
+     * Try convert Json to Map with DynaBean elements
+     */
+    @Test
+    public void testJsonToDynaBeanMap2(){
+
+        Map mapConfig= mapUtilService.toDynaBeanMap(
                 "{" +
                         "User:{name:'nombre',ap:'apellido paterno',am:'apellido materno'}" +
                         ",Labi:{age:'edad', date:'fecha',value:'actualizar',createdOn:'fecha registro'}" +
-                "}");
+                        "}");
 
-        logger.info(TEST_READY);
+        
 
         Set keys=mapConfig.entrySet();
         Iterator<Map.Entry> it= keys.iterator();
@@ -120,7 +153,7 @@ public class MapUtilServiceImplTest extends AbstractJUnit4Test {
 
                 DynaBean bean=(DynaBean) entry.getValue();
 
-                Map res=mapUtilService.convertDynaBeanToMap(bean);
+                Map res=mapUtilService.toMap(bean);
 
                 logger.info("map res:{}",res);
 
@@ -131,24 +164,88 @@ public class MapUtilServiceImplTest extends AbstractJUnit4Test {
     }
 
     /**
-     * Prueba la conversión de cadenas Json en Beans con propiedades anidadas
+     * Try to convert complex json to Map
+     */
+    @Test
+    public void testComplexJsonToMap(){
+
+        String[] jsonStrings={
+                "{a:1,b:2, name:'José Alberto',age:26, value:true}"
+                , "{'User':{a:1,b:2, name:'José Alberto',age:26, value:true}}"
+                , "{com.oz.util.BeanMorpherTest:{name:'nombre',ap:'apellido paterno',am:'apellido materno'}}"
+                ,
+                "{"
+                    +"User:{name:'nombre',ap:'apellido paterno',am:'apellido materno'}" +
+                    ",Labi:{age:'edad', date:'fecha',value:'actualizar',createdOn:'fecha registro'}" +
+                "}"
+        };
+
+        
+
+        for(String json: jsonStrings){
+
+            Map map=mapUtilService.toMap(json);
+            assertNotNull(map);
+            logger.info("Map :{}",map);
+            logger.info("Next Element...");
+        }
+
+    }
+
+    /**
+     * Try to convert complex json to Map
+     */
+    @Test
+    public void testComplexJsonToMap2(){
+
+        String[] jsonStrings={
+                "{com.oz.model.dto.PersonDto:"
+                        +"{"
+                        + "name:'nombre',firstName:'apellido paterno',"
+                        +"com.oz.model.dto.AddressDto:{street:'curp'}"
+                        +"}"
+                        +"}"
+        };
+
+        
+
+        Map map= null;
+        for(String json: jsonStrings){
+
+            logger.info(json);
+
+            map=mapUtilService.toMap(json);
+            assertNotNull(map);
+            //logger.info("Map :{}",map);
+            logger.info("== Next Element...");
+        }
+
+        printMap(map);
+
+
+    }
+
+
+
+    /**
+     * Test try to get matched positions between Json Map with nested properties and specific fields to match
      * @throws ClassNotFoundException
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
     @Test
-    public void TestsMergePositions() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void testMatchedPositions() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         String jsonString=
                 "{"+com.oz.model.dto.PersonDto.class.getName()+":"
                         +"{"
                         + "name:'nombre',firstName:'apellido paterno'"
-                        +", Address:{street:'curp'}"
+                        +", Address:{street:'curp'}" // This property is skipped
                         +", country:{country:'curp'}"
                         +"}"
                         +"}";
 
-        Map beanMap=mapUtilService.convertJsonToMap(jsonString);
+        Map beanMap=mapUtilService.toMap(jsonString);
         logger.info(jsonString);
         Map mapCol= new LinkedHashMap();
 
@@ -161,33 +258,31 @@ public class MapUtilServiceImplTest extends AbstractJUnit4Test {
         mapCol.put("fecha registro",6);
         mapCol.put("nomina",7);
 
-        logger.info(TEST_READY);
+        
 
-        Object result=mapUtilService.toClassElementList(beanMap, mapCol);
-
+        Object result=mapUtilService.getMatchedPositions(beanMap, mapCol);
         logger.info("Result:{}",result);
-
 
     }
 
     /**
-     * Prueba la conversión de cadenas Json en Listas de Beans
+     * Test try to get matched positions between Json Map with qualified class name and specific fields to match
+     * de de clase por el nombre calificado
      * @throws ClassNotFoundException
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
     @Test
-    public void TestsMergePositions2() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void testMatchedPositions2() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         String jsonString= "{"
                 + BeanReaderTest.class.getName()
                 + ":{name:'nombre',ap:'apellido paterno',am:'apellido materno'}"
-                + ","+BeanReaderTest.class.getName()//"A"+
+                + ","+BeanReaderTest.class.getName() // NOMBRE CALIFICADO
                 + ":{age:'edad', date:'fecha',value:'actualizar',createdOn:'fecha registro'}"
-                //+ ","+ User.class.getName()+":{username:'nombre',email:'fecha'}"
                 +"}";
 
-        Map beanMap=mapUtilService.convertJsonToMap(jsonString);
+        Map beanMap=mapUtilService.toMap(jsonString);
 
         Map mapCol= new LinkedHashMap();
 
@@ -200,17 +295,23 @@ public class MapUtilServiceImplTest extends AbstractJUnit4Test {
         mapCol.put("fecha registro",6);
         mapCol.put("nomina",7);
 
-        logger.info(TEST_READY);
+        
 
-        Object result=mapUtilService.toClassElementList(beanMap, mapCol);
+        Object result=mapUtilService.getMatchedPositions(beanMap, mapCol);
 
         logger.info("Result:{}",result);
 
 
     }
 
+    /**
+     * Test try to get matched positions between Json Map with nested properties and specific fields to match
+     * @throws ClassNotFoundException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
     @Test
-    public void testJson() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public void testMatchedPositions3() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
 
         String jsonString=
                 "{"+com.oz.model.dto.PersonDto.class.getName()+":"
@@ -221,7 +322,7 @@ public class MapUtilServiceImplTest extends AbstractJUnit4Test {
                         +"}"
                         +"}";
 
-        Map beanMap=mapUtilService.convertJsonToMap(jsonString);
+        Map beanMap=mapUtilService.toMap(jsonString);
         Map mapCol= new LinkedHashMap();
 
         mapCol.put("nombre",0);
@@ -233,16 +334,22 @@ public class MapUtilServiceImplTest extends AbstractJUnit4Test {
         mapCol.put("fecha registro",6);
         mapCol.put("nomina",7);
 
-        logger.info(TEST_READY);
+        
 
-        Object result=mapUtilService.toClassElementList(beanMap, mapCol);
+        Object result=mapUtilService.getMatchedPositions(beanMap, mapCol);
 
         logger.info("Result:{}",result);
 
     }
 
+    /**
+     * Test try to get matched positions between Json Map with qualified class name and specific fields to match
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
     @Test
-    public void testJson3() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public void testMatchedPositions4() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
 
         String json1="{"+com.oz.control.service.impl.A.class.getName()+":"
                 +"{nom:'nombre',ap:'apellido paterno'}"
@@ -285,20 +392,20 @@ public class MapUtilServiceImplTest extends AbstractJUnit4Test {
                 ",birthday:'fecha nacimiento',email:'email', curp:'curp'" +
                 ",person:{name:'nombre',firstName:'apellido paterno',lastName:'apellido materno'}}}";
 
-        Map beanMap=mapUtilService.convertJsonToMap(json5);
+        Map beanMap=mapUtilService.toMap(json5);
         Map mapCol= new LinkedHashMap();
 
         mapCol.put("nombre",0);
         mapCol.put("apellido paterno",1);
         mapCol.put("apellido materno",2);
-        mapCol.put("email",3);
+        mapCol.put("email", 3);
         mapCol.put("fecha nacimiento",4);
-        mapCol.put("curp",5);
+        mapCol.put("curp", 5);
         mapCol.put("fecha registro",6);
         mapCol.put("nomina",7);
 
 
-        List<ClassElement> container=mapUtilService.toClassElementList(beanMap, mapCol);
+        List<ClassElement> container=mapUtilService.getMatchedPositions(beanMap, mapCol);
 
         logger.info("size:{}, result:{}", container.size(), container );
 
@@ -306,44 +413,14 @@ public class MapUtilServiceImplTest extends AbstractJUnit4Test {
         logger.info("{}", com.oz.control.service.impl.A.class.getDeclaredFields()[2]);
     }
 
-//    @Test
-//    public void testGetMapKeyIndexes(){
-//        Map map=new LinkedHashMap();
-//        Map map1=new LinkedHashMap();
-//        Map map2=new LinkedHashMap();
-//        List list=new ArrayList();
-//
-//        map2.put("test4.2.1","first_1");
-//        map2.put("test4.2.2","second_1");
-//        map2.put("test4.2.3","qwerty_2");
-//
-//        map1.put("test4.1","first_1");
-//        map1.put("test4.2",map2);
-//        map1.put("test4.3","qwerty_2");
-//
-//        map.put("test1","first");
-//        map.put("test2","second");
-//        map.put("test3","qwerty");
-//        map.put("test4",map1);
-//        map.put("test5",list);
-//        map.put("test6","ñlkjhg");
-//
-//        list.add("1");
-//        list.add("2");
-//        list.add(map2);
-//
-//        String jsonConfig="{ PN : {" + com.oz.control.service.impl.l.class.getName() + ":{test_1:'test1' , test_2:'test2' , test_3:'test3'}},PA : {" + com.oz.control.service.impl.l.class.getName() + ":{test_1:'test3' , test_2:'test3' , test_3:'test1'}}}";
-//        Map mapConfig = mapUtilService.convertJsonToMap(jsonConfig);
-//
-//        List<IndexedBeanMap> mapWrappers = mapUtilService.getListKeyIndexes(mapConfig);
-//        logger.info("recursive classes={}", mapWrappers);
-//
-//    }
-
+    /**
+     *
+     */
     @Test
     public void testMergeBeanFieldsVsMapKeysByMapConfig(){
-        String jsonConfig="{ PN : {" + com.oz.control.service.impl.l.class.getName() + ":{test_1:'test1' , test_2:'test2' , test_3:'test3'}}}";
-        Map mapConfig = mapUtilService.convertJsonToMap(jsonConfig);
+        String jsonConfig="{ PN : {" + com.oz.control.service.impl.l.class.getName()
+                + ":{test_1:'test1' , test_2:'test2' , test_3:'test3'}}}";
+        Map mapConfig = mapUtilService.toMap(jsonConfig);
         logger.info("mapInfo={}",mapConfig);
 
        /* Map mapValues=new LinkedHashMap();
@@ -357,7 +434,7 @@ public class MapUtilServiceImplTest extends AbstractJUnit4Test {
 //                + ","+com.oz.control.service.impl.B.class.getName()+":"
 //                +"{nom:'nombre',ap:'apellido paterno'}"
                 //+"}";
-        Map mapConfig=mapUtilService.convertJsonToMap(json);
+        Map mapConfig=mapUtilService.toMap(json);
         logger.info("mapConfig={}",mapConfig);
 
 //        List result=mapUtilService.mergeBeanFieldsVsMapKeysByMapConfig(com.oz.control.service.impl.l.class,mapValues,mapConfig);
@@ -366,39 +443,6 @@ public class MapUtilServiceImplTest extends AbstractJUnit4Test {
           */
     }
 
-    /**
-     * Prueba el mencanismo para obtener las posiciones númericas de las keys contenidas en un mapa
-     * @throws Exception if test Fail into process
-     */
-    @Test
-    public void testGetMapPositions() throws Exception {
-
-        // Case 1
-
-        String jsonValues=testProperties.getProperty("test.json.map.1");
-        Map srcMap = mapUtilService.convertJsonToMap(jsonValues);
-
-        logger.info("map src={}",srcMap);
-        logger.info(TEST_READY);
-
-        Map result =mapUtilService.getMapPositions(srcMap);
-        assertNotNull(result);
-
-        logger.info("result map:{}", result);
-
-        // Case 2
-        jsonValues=testProperties.getProperty("test.json.map.2");
-        srcMap = mapUtilService.convertJsonToMap(jsonValues);
-
-        logger.info("map src={}",srcMap);
-        logger.info(TEST_READY);
-
-        result =mapUtilService.getMapPositions(srcMap);
-        assertNotNull(result);
-
-        logger.info("result map:{}", result);
-
-    }
 }
 
 class l{

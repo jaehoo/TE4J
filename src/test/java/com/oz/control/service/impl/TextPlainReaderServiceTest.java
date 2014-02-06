@@ -57,12 +57,12 @@ public class TextPlainReaderServiceTest extends AbstractJUnit4Test {
 
         getCols.add("NOMBRE");
 
-        Map colPositions=frs.getColPos(fileCSV.getInputStream());
+        Map colPositions=frs.getPositions(fileCSV.getInputStream());
 
         logger.info("MapCol positions:{}",colPositions);
         assertNotNull(colPositions);
 
-        colPositions=frs.getColPosByNames(fileCSV.getInputStream(), getCols);
+        colPositions=frs.getPositions(fileCSV.getInputStream(), getCols);
 
         logger.info("MapCol positions:{}",colPositions);
         assertNotNull(colPositions);
@@ -82,12 +82,12 @@ public class TextPlainReaderServiceTest extends AbstractJUnit4Test {
 
         logger.info(TEST_READY);
 
-        Map mapClass= mapUtilService.convertJsonToMap(
+        Map mapClass= mapUtilService.toMap(
                 "{"
-                    + BeanReaderTest.class.getName()
-                    + ":{'name':'nombre','ap':'apellido paterno','am':'apellido materno'"
-                    + ", 'age':'edad', 'date':'fecha','value':'actualizar','createdOn':'fecha registro'}"
-                +"}");
+                        + BeanReaderTest.class.getName()
+                        + ":{'name':'nombre','ap':'apellido paterno','am':'apellido materno'"
+                        + ", 'age':'edad', 'date':'fecha','value':'actualizar','createdOn':'fecha registro'}"
+                        + "}");
 
         List<BeanReaderTest> list=frs.toBeanList(fileCSV.getInputStream(), mapClass);
 
@@ -111,14 +111,14 @@ public class TextPlainReaderServiceTest extends AbstractJUnit4Test {
 
         logger.info(TEST_READY);
 
-        Map mapClass= mapUtilService.convertJsonToMap(
+        Map mapClass= mapUtilService.toMap(
                 "{"
-                    + BeanReaderTest.class.getName()
-                    + ":{name:'nombre',ap:'apellido paterno',am:'apellido materno'}"
-                    + ","+BeanReaderTest.class.getName()//"A"+
-                    + ":{age:'edad', date:'fecha',value:'actualizar',createdOn:'fecha registro'}"
-                    //+ ","+ User.class.getName()+":{username:'nombre',email:'fecha'}"
-                +"}");
+                        + BeanReaderTest.class.getName()
+                        + ":{name:'nombre',ap:'apellido paterno',am:'apellido materno'}"
+                        + "," + BeanReaderTest.class.getName()//"A"+
+                        + ":{age:'edad', date:'fecha',value:'actualizar',createdOn:'fecha registro'}"
+                        //+ ","+ User.class.getName()+":{username:'nombre',email:'fecha'}"
+                        + "}");
 
         List list=frs.toBeanList(fileCSV.getInputStream(), mapClass);
 
@@ -152,7 +152,7 @@ public class TextPlainReaderServiceTest extends AbstractJUnit4Test {
 
                 +"}";
 
-        Map mapClass= mapUtilService.convertJsonToMap(json6);
+        Map mapClass= mapUtilService.toMap(json6);
 
         List list=frs.toBeanList(fileCSV.getInputStream(), mapClass);
 

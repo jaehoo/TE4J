@@ -22,39 +22,61 @@ public interface MapUtilService {
 
     /**
      * Convierte una cadena de texto en un mapa, si tiene atributos recusrsivos los convierte en mapas.,
-     * @param jsonString cadena Json
+     * @param json cadena Json
      * @return  mapa con los valores de la cadena de texto
      */
-    public Map convertJsonToMap(String jsonString);
+    public Map toMap(String json);
 
     /**
      * Convierte una cadena de texto en un mapa con Bean dinamicos {@link org.apache.commons.beanutils.DynaBean}
-     * @param jsonString cadena de texto json
+     * @param json cadena de texto json
      * @return mapa con objetos dynamicos
      */
-    public Map convertJsonToRawMap(String jsonString);
+    public Map toDynaBeanMap(String json);
 
     /**
      *  Crea un mapa con los nombres de las propiedades dinamicas y sus valores.
      * @param dynaBean objeto con propiedades dinamicas
      * @return Nombres y valores de las propiedades dinamicas.
      */
-    public Map convertDynaBeanToMap(DynaBean dynaBean);
+    public Map toMap(DynaBean dynaBean);
 
     /**
      * Coloca los datos que contiene un objeto en un mapa, todas las referencias de los elementos y sus valores
      * son colocados y encapsulados en un nuevo mapa.
      * @param o, objeto con el contenido.
-     * @return {@link java.util.Map} si o es un Map, {@link java.util.List}  si o es una Lista, cuarlquier otro es invalido.
+     * @return {@link java.util.Map} si es un Map, {@link java.util.List} si es una Lista, cuarlquier otro es invalido.
      */
     public Object toMap(Object o);
+
+    /**
+     * Get Numeric positions from map, create a new map and retrieve key values with numeric positions as values
+     * , based on zero index. This function is not recursive.
+     * @param map source map to read
+     * @return new instanced map with original keys
+     * @throws IllegalAccessException if cant Access to Map Class
+     * @throws InstantiationException If cant create new map Instance
+     */
+    public Map getPositions(Map map) throws IllegalAccessException, InstantiationException;
+
+    /**
+     * Get Numeric positions from map, create a new map and retrieve key values with numeric positions as values
+     * , based on zero index. This function is not recursive.
+     * @param map source map to read
+     * @param recursive read source as recursive and nested maps
+     *
+     * @return new instanced map with original keys
+     * @throws IllegalAccessException if cant Access to Map Class
+     * @throws InstantiationException If cant create new map Instance
+     */
+    public Map getPositions(Map map, boolean recursive) throws IllegalAccessException, InstantiationException;
 
     /**
      * Obtiene la posicion numerica de los atributos de una clase
      * @param objectClass Clase a la cual se van a tomar los fields
      * @return mapa con el nombre de la propiedad y el número de la posición que tiene el Field en la clase.
      */
-    public <T> Map<String, Integer> getFieldPositions(T objectClass);
+    public <T> Map<String, Integer> getPositions(T objectClass);
 
     /**
      * Obtiene las posiciones numericas de las propiedades de una clase por los nombres indicados.
@@ -62,7 +84,23 @@ public interface MapUtilService {
      * @param fieldNames Nombre de los fields a tomar de la clase
      * @return mapa con el nombre de la propiedad y el número de la posición que tiene el Field en la clase.
      */
-    public <T> Map<String, Integer> getFieldPositions(T objectClass, Map fieldNames);
+    public <T> Map<String, Integer> getPositions(T objectClass, Map fieldNames);
+
+    /**
+     * Analiza las propiedades del mapa de una clase contra el mapa de propiedades de una cadena JSON,
+     * se obtiene la poscición de las propiedades que concuerden entre ambos mapas, esto crea un plano cartesiano
+     * para determinar como se relacionan los atributos y obtener su posición númerica, es decir coordenadas.
+     *
+     *
+     *
+     * @param propertyMap Mapa de propiedades de la clase con el nombre de la propiedad como key y su posción númerica
+     *                    dentro del mapa.
+     * @param fieldMap Mapa con los nombres de los campos y su poscición númerica dentro el mapa.
+     * @return Lista cd clases con el resumen de las posiciones.
+     * @throws ClassNotFoundException
+     *
+     */
+    public List<ClassElement> getMatchedPositions(Map propertyMap, Map fieldMap) throws ClassNotFoundException;
 
     /**
      *  Obtiene las posiciones de las llaves de un mapa, las posiciones de las propiedades de una classe y genera
@@ -81,48 +119,29 @@ public interface MapUtilService {
      *
      * @return lista con las posiciones por pares que se deben extraer de la fuente de datos.
      */
-    public <T> List<Position> getPositionsFromMapKeysVsClassFields(Map colNamesAndPositions
+    public <T> List<Position> getMatchedPositions(Map colNamesAndPositions
             , Map fieldNamesAndColNames
             , T beanClass);
 
 
     /**
-     * Crea una lista con el analisis de las clases y las posiciones entre el mapa que describe las propiedades del bean contra
-     * los nombres de las columnas y las pocisiones del archivo a convertir.
-     * @param beanMap
-     * @param colMap
-     * @return Lista cd clases con el resumen de las posiciones.
-     * @throws ClassNotFoundException
      *
+     * @param map
+     * @return
      */
-    public List<ClassElement> toClassElementList(Map beanMap, Map colMap) throws ClassNotFoundException;
-
-
-    List<IndexedBeanMap> wrapIntoList(Map map);
+    public List<IndexedBeanMap> wrapIntoList(Map map);
 
     //<T> Map mergeBeanFieldsPosVsMapKeysPositionsByMapConfig(Map mapValues, Map mapConfig);
 
-    <T> void mergePositions(T beanInstance, Map srcMap, Map mapConfig);
     /**
-     * Get Numeric positions from map, create a new map and retrieve key values with numeric positions as values
-     * , based on zero index. This function is not recursive.
-     * @param map source map to read
-     * @return new instanced map with original keys
-     * @throws IllegalAccessException if cant Access to Map Class
-     * @throws InstantiationException If cant create new map Instance
-     */
-    Map getMapPositions(Map map) throws IllegalAccessException, InstantiationException;
-
-    /**
-     * Get Numeric positions from map, create a new map and retrieve key values with numeric positions as values
-     * , based on zero index. This function is not recursive.
-     * @param map source map to read
-     * @param recursive read source as recursive and nested maps
      *
-     * @return new instanced map with original keys
-     * @throws IllegalAccessException if cant Access to Map Class
-     * @throws InstantiationException If cant create new map Instance
+     * @param beanInstance
+     * @param srcMap
+     * @param mapConfig
+     * @param <T>
      */
-    Map getMapPositions(Map map, boolean recursive) throws IllegalAccessException, InstantiationException;
+    public <T> void mergePositions(T beanInstance, Map srcMap, Map mapConfig);
+
+
 }
 

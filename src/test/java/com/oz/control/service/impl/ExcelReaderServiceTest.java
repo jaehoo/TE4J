@@ -49,7 +49,7 @@ public class ExcelReaderServiceTest extends AbstractJUnit4Test {
 
         logger.info( TEST_READY );
 
-        Map colPosition =fileReaderService.getColPos(file.getInputStream());
+        Map colPosition =fileReaderService.getPositions(file.getInputStream());
 
         assertNotNull( colPosition );
 
@@ -72,7 +72,7 @@ public class ExcelReaderServiceTest extends AbstractJUnit4Test {
 
         logger.info("Getting positions from this columns:{}", list);
 
-        Map colPosition =fileReaderService.getColPosByNames(file.getInputStream(), list);
+        Map colPosition =fileReaderService.getPositions(file.getInputStream(), list);
 
         assertNotNull( colPosition );
 
@@ -98,7 +98,7 @@ public class ExcelReaderServiceTest extends AbstractJUnit4Test {
 //        testMap.put("createdOn", "fecha registro");
 //
 //
-//        Map mapClass= mapUtilService.convertJsonToMap("{"
+//        Map mapClass= mapUtilService.toMap("{"
 //                + BeanReaderTest.class.getName()
 //                + ":{'name':'nombre','ap':'apellido paterno','am':'apellido materno'"
 //                + ", 'age':'edad', 'date':'fecha','value':'actualizar','createdOn':'fecha registro'}"
@@ -119,7 +119,7 @@ public class ExcelReaderServiceTest extends AbstractJUnit4Test {
 //
 //        logger.info( TEST_READY );
 //
-//        Map mapClass= mapUtilService.convertJsonToMap(
+//        Map mapClass= mapUtilService.toMap(
 //                "{"
 //                    + BeanReaderTest.class.getName()
 //                    + ":{name:'nombre',ap:'apellido paterno',am:'apellido materno'}"

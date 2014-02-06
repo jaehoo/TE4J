@@ -66,7 +66,7 @@ public class TestCreateSingleReport extends AbstractJUnitTest {
 
 
     /**
-     * Case 2, Make single hello world report... save into dest file with Jasper API
+     * Case 2, Make single hello world report... save into destination file with Jasper API
      */
     @Test
     public void testSingleJasperReport2(){
@@ -91,6 +91,7 @@ public class TestCreateSingleReport extends AbstractJUnitTest {
             String output=System.getProperty("java.io.tmpdir")+"/"+getFilename("pdf");
 
             JasperExportManager.exportReportToPdfFile(jasperPrint, output);
+            logger.info("out:{}",output);
 
         }
         catch ( JRException e ){

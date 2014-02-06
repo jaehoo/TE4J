@@ -1,5 +1,9 @@
 package com.oz.utils;
 
+import net.sf.ezmorph.MorphUtils;
+import net.sf.ezmorph.MorpherRegistry;
+import net.sf.ezmorph.bean.BeanMorpher;
+import org.apache.commons.beanutils.DynaBean;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -12,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Proporciona soporte para las pruebas con Spring y Junit,
@@ -126,6 +131,42 @@ public abstract class AbstractJUnit4Test extends AbstractJUnit4SpringContextTest
             logger.warn("the Map is EMPTY!!!!");
         }
 
+
+    }
+
+    /**
+     * To print Map content
+     * @param map input
+     */
+    public void print(Map map){
+
+        Set keys=map.entrySet();
+        Iterator<Map.Entry> it=keys.iterator();
+
+        MorpherRegistry morpherRegistry = new MorpherRegistry();
+        MorphUtils.registerStandardMorphers(morpherRegistry);
+
+        while (it.hasNext()){
+
+            Map.Entry entry= it.next();
+
+
+            if(entry instanceof DynaBean){
+                DynaBean dynaBean=(DynaBean) entry.getValue();
+
+                logger.info("{}:{}",dynaBean.getClass(),dynaBean);
+
+                morpherRegistry.registerMorpher( new BeanMorpher( BeanReaderTest.class, morpherRegistry ) );
+                BeanReaderTest myBeanTest = (BeanReaderTest)
+                        morpherRegistry.morph( BeanReaderTest.class, dynaBean );
+
+                logger.info("MyBean:{}", myBeanTest);
+            }
+            else {
+                logger.info("{} {}:{}",new Object[]{entry.getValue().getClass(),entry.getKey(),entry.getValue()});
+            }
+
+        }
 
     }
 

@@ -23,7 +23,6 @@ public interface TemplateEngine {
      * @return Object, resultado del proceso de la platinlla, puede ser
      * un arreglo de bytes, texto, un archivo pdf, etc... depende de la configuración
      * del servicion que lo implemente.
-     * @author <a href="mailto:jaehoo@gmail.com">Lic. José Alberto Sánchez</a>
      */
     public Object processTemplate(TemplateData data);
 

@@ -16,23 +16,21 @@ import java.util.Map;
 public interface FileReaderService {
 
     /**
+     * Obtiene un mapa con los nombres y las posiciones de los campos del archivo.
+     * @param is, Stream de datos del archivo.
+     *
+     * @return map<{@link String},{@link Integer}> mapa de datos.
+     */
+    public Map<String, Integer> getPositions(InputStream is);
+
+    /**
      * Obtiene un mapa con los nombres y las posciones de las columnas indicadas del archivo.
      * @param is, Stream de datos del archivo.
      * @param columns nombre de las columnas a buscar en el archivo.
      *
      * @return map<{@link String},{@link Integer}> mapa de datos.
-     * @author <a href="mailto:jaehoo@gmail.com">Alberto Sánchez</a>
      */
-    public Map<String, Integer> getColPosByNames(InputStream is, List<String> columns);
-
-    /**
-     * Obtiene un mapa con los nombres y las posiciones de todas las columnas del archivo.
-     * @param is, Stream de datos del archivo.
-     *
-     * @return map<{@link String},{@link Integer}> mapa de datos.
-     * @author <a href="mailto:jaehoo@gmail.com">Alberto Sánchez</a>
-     */
-    public Map<String, Integer> getColPos(InputStream is);
+    public Map<String, Integer> getPositions(InputStream is, List<String> columns);
 
     /**
      * Convierte el stream de datos en una lista de beans de acuerdo a los objetos del mapa que se desean obtener.
@@ -42,7 +40,6 @@ public interface FileReaderService {
      * equivalente en el archivo.
      *
      * @return Lista con el arreglo de datos de las instancias creadas.
-     * @author <a href="mailto:jaehoo@gmail.com">Alberto Sánchez</a>
      */
     public List toBeanList(InputStream is, Map<String, Object> beanMap) throws ClassNotFoundException;
 

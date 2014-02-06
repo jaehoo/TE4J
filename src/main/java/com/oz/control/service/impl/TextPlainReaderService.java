@@ -53,8 +53,8 @@ public class TextPlainReaderService  implements FileReaderService {
      *
      * @return
      */
-    public Map<String, Integer> getColPos(InputStream is){
-        return getColPosByNames(is, null);
+    public Map<String, Integer> getPositions(InputStream is){
+        return getPositions(is, null);
     }
 
     /**
@@ -64,7 +64,7 @@ public class TextPlainReaderService  implements FileReaderService {
      *
      * @return Nombres de las columnas y su posición númerica.
      */
-    public Map<String, Integer> getColPosByNames(InputStream is, List<String> columns) {
+    public Map<String, Integer> getPositions(InputStream is, List<String> columns) {
 
         logger.debug("Getting positions by column names...");
 
@@ -101,7 +101,7 @@ public class TextPlainReaderService  implements FileReaderService {
      * equivalente en el archivo.
      *
      * @return Lista con el arreglo de datos de las instancias creadas.
-     * @author <a href="mailto:jaehoo@gmail.com">Alberto Sánchez</a>
+     
      */
     @Override
     public List toBeanList(InputStream is, Map<String, Object> beanMap) throws ClassNotFoundException {
@@ -130,7 +130,7 @@ public class TextPlainReaderService  implements FileReaderService {
             mapCol = getColumnPositions(reader);
 
             // Empatar las posiciones de las propiedades contra las posiciones de las columnas
-            List<ClassElement> positions=mapUtilService.toClassElementList(beanMap,mapCol);
+            List<ClassElement> positions=mapUtilService.getMatchedPositions(beanMap, mapCol);
 
             if(positions.size()<=0) throw new NullArgumentException("No hay objetos por recuperar");
 
@@ -340,7 +340,7 @@ public class TextPlainReaderService  implements FileReaderService {
             // Lee las posiciones de las columnas del archivo
             mapCol = getColumnPositions(reader);
 
-            List<Position> xy = getPositionsFromMapKeysVsClassFields(mapCol, mapClass, beanClass);
+            List<Position> xy = getMatchedPositions(mapCol, mapClass, beanClass);
 
             beanList = new ArrayList<T>();
 

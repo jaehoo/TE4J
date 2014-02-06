@@ -25,12 +25,12 @@ public class MapUtilServiceImpl implements MapUtilService {
 
     private static final Logger logger = LoggerFactory
             .getLogger(MapUtilServiceImpl.class);
-    
+
     private static final String labelClass="CLASS";
     private static final String labelPositions="POSITIONS";
 
     @Override
-    public Map convertJsonToMap(String jsonString) {
+    public Map toMap(String jsonString) {
 
         logger.debug("Covert Json String to JSON Object ...");
         JSONObject json = JSONObject.fromObject(jsonString);
@@ -46,15 +46,15 @@ public class MapUtilServiceImpl implements MapUtilService {
     }
 
     @Override
-    public Map convertJsonToRawMap(String jsonString) {
+    public Map toDynaBeanMap(String json) {
 
-        JSONObject map = JSONObject.fromObject(jsonString);
+        JSONObject map = JSONObject.fromObject(json);
         return  (Map) JSONObject.toBean(map, HashMap.class);
 
     }
 
     @Override
-    public Map convertDynaBeanToMap(DynaBean dynaBean) {
+    public Map toMap(DynaBean dynaBean) {
 
         DynaProperty[] dynaProperties=dynaBean.getDynaClass().getDynaProperties();
 
@@ -66,7 +66,7 @@ public class MapUtilServiceImpl implements MapUtilService {
                 Object value=dynaBean.get(dp.getName());
 
                 if( value instanceof DynaBean ){
-                    map.put(dp.getName(), convertDynaBeanToMap((DynaBean) value));
+                    map.put(dp.getName(), toMap((DynaBean) value));
                 }else{
                     map.put( dp.getName(),value );
                 }
@@ -105,7 +105,7 @@ public class MapUtilServiceImpl implements MapUtilService {
                 entry=it.next();
 
                 if(entry.getValue() instanceof DynaBean){
-                    resMap.put(entry.getKey(),convertDynaBeanToMap((DynaBean)entry.getValue()));
+                    resMap.put(entry.getKey(), toMap((DynaBean) entry.getValue()));
                 }
                 else if(entry.getValue() instanceof Map || entry.getValue() instanceof List){
                     resMap.put(entry.getKey(),toMap(entry.getValue()));
@@ -129,7 +129,7 @@ public class MapUtilServiceImpl implements MapUtilService {
             for(Object e : list){
 
                 if(e instanceof DynaBean){
-                    resList.add(convertDynaBeanToMap((DynaBean) e));
+                    resList.add(toMap((DynaBean) e));
                 }
                 else if(e instanceof Map || e instanceof List){
                     resList.add(toMap(e));
@@ -140,7 +140,7 @@ public class MapUtilServiceImpl implements MapUtilService {
 
         }
         else if( o instanceof DynaBean){
-            return convertDynaBeanToMap((DynaBean) o);
+            return toMap((DynaBean) o);
         }
         else{
             throw new UnsupportedOperationException("The object type don't be casted to Map...");
@@ -154,7 +154,7 @@ public class MapUtilServiceImpl implements MapUtilService {
      * @author <a href="mailto:jaehoo@gmail.com">Lic. José Alberto Sánchez</a>
      */
     @Override
-    public <T> Map<String, Integer> getFieldPositions(T objectClass){
+    public <T> Map<String, Integer> getPositions(T objectClass){
 
         Field[] fields = null;
         Map fieldPositions=null;
@@ -197,7 +197,7 @@ public class MapUtilServiceImpl implements MapUtilService {
      * @author <a href="mailto:jaehoo@gmail.com">Lic. José Alberto Sánchez</a>
      */
     @Override
-    public <T> Map<String, Integer> getFieldPositions(T objectClass, Map fieldNames){
+    public <T> Map<String, Integer> getPositions(T objectClass, Map fieldNames){
 
         Field[] fields = null;
         Object campo = null;
@@ -263,7 +263,7 @@ public class MapUtilServiceImpl implements MapUtilService {
      * @author <a href="mailto:jaehoo@gmail.com">Lic. José Alberto Sánchez</a>
      */
     @Override
-    public <T> List<Position> getPositionsFromMapKeysVsClassFields(Map colNamesAndPositions
+    public <T> List<Position> getMatchedPositions(Map colNamesAndPositions
             , Map fieldNamesAndColNames
             , T beanClass){
 
@@ -272,7 +272,7 @@ public class MapUtilServiceImpl implements MapUtilService {
         Set properties = fieldNamesAndColNames.keySet();
         logger.debug("SET: {}", properties);
 
-        Map<String, Integer> mapProperties = getFieldPositions(beanClass, fieldNamesAndColNames);
+        Map<String, Integer> mapProperties = getPositions(beanClass, fieldNamesAndColNames);
 
         logger.debug("fieldNamesAndColNames: {}", fieldNamesAndColNames);
         logger.debug("mapProperties: {}", mapProperties);
@@ -327,53 +327,54 @@ public class MapUtilServiceImpl implements MapUtilService {
 
     ){
 
-            if(src instanceof Map){
+        if(src instanceof Map){
 
-                logger.debug("is Map!");
+            logger.debug("is Map!");
 
-                Map nestedMap=(Map) src;
+            Map nestedMap=(Map) src;
 
-                if(nestedMap!= null && nestedMap.size()>=1){
+            if(nestedMap!= null && nestedMap.size()>=1){
 
-                    logger.debug("Calculate Positions... {}",clazz);
+                logger.debug("Calculate Positions... {}",clazz);
 
-                    List posList=getPositionsFromMapKeysVsClassFields(mapCol, nestedMap,clazz);
+                List posList= getMatchedPositions(mapCol, nestedMap, clazz);
 
-                    logger.debug("parent: {} index: {}", fi.getParentIndex(), fi.getIndex());
-                    // ADD to container
+                logger.debug("parent: {} index: {}", fi.getParentIndex(), fi.getIndex());
+                // ADD to container
 
-                    ClassElement cel= new ClassElement();
-                    cel.setClazz(clazz);
-                    cel.setIndex(fi.getIndex());
-                    cel.setFieldPosition(fieldPos);
-                    cel.setParentIndex(fi.getParentIndex());
-                    cel.setPositions(posList);
+                ClassElement cel= new ClassElement();
+                cel.setClazz(clazz);
+                cel.setIndex(fi.getIndex());
+                cel.setFieldPosition(fieldPos);
+                cel.setParentIndex(fi.getParentIndex());
+                cel.setPositions(posList);
 
-                    fi.setParentIndex(fi.getIndex());
-                    fi.setIndex(fi.getIndex()+1);
+                fi.setParentIndex(fi.getIndex());
+                fi.setIndex(fi.getIndex()+1);
 
-                    container.add(cel);
+                container.add(cel);
 
-                    int parentIndex=fi.getParentIndex();
+                int parentIndex=fi.getParentIndex();
 
-                    Iterator<Map.Entry> it= nestedMap.entrySet().iterator();
+                Iterator<Map.Entry> it= nestedMap.entrySet().iterator();
 
-                    while(it.hasNext()){
+                Map positions= getPositions(clazz);
 
-                        fi.setParentIndex(parentIndex);
+                while(it.hasNext()){
 
-                        Map.Entry entry=it.next();
+                    fi.setParentIndex(parentIndex);
+                    Map.Entry entry=it.next();
 
-                        if(entry.getValue() instanceof Map){
 
-                            //int parentIdx=fi.getKeyIndex();
+                    if(entry.getValue() instanceof Map){
 
-                            logger.debug("key:{}",entry.getKey());
+                        //int parentIdx=fi.getKeyIndex();
 
-                            Map positions=getFieldPositions(clazz);
+                        logger.debug("key:{}",entry.getKey());
 
-                            Object pos=positions.get(entry.getKey());
+                        Object pos=positions.get(entry.getKey());
 
+                        if(pos!= null){
                             Integer position=(Integer) pos;
 
                             Field field=clazz.getDeclaredFields()[position];
@@ -389,30 +390,33 @@ public class MapUtilServiceImpl implements MapUtilService {
                                     , mapCol
                             );
                         }
-                        else{
-                            logger.debug("skip:{}", entry.getKey());
-                        }
 
+
+                    }
+                    else{
+                        logger.debug("skip:{}", entry.getKey());
                     }
 
                 }
 
-            }else if(src instanceof List){
-
-                logger.debug("is List!... iterating");
-
-                List nestedList=(List) src;
-
-                int parentIndex=fi.getParentIndex();
-
-                for(Object o : nestedList){
-
-                    fi.setParentIndex(parentIndex);
-
-                    toClassElement(o, clazz, fi, container, fieldPos, mapCol);
-                }
-
             }
+
+        }else if(src instanceof List){
+
+            logger.debug("is List!... iterating");
+
+            List nestedList=(List) src;
+
+            int parentIndex=fi.getParentIndex();
+
+            for(Object o : nestedList){
+
+                fi.setParentIndex(parentIndex);
+
+                toClassElement(o, clazz, fi, container, fieldPos, mapCol);
+            }
+
+        }
 
     }
 
@@ -426,7 +430,7 @@ public class MapUtilServiceImpl implements MapUtilService {
      *
      * @author <a href="mailto:jaehoo@gmail.com">Lic. José Alberto Sánchez</a>
      */
-    public List<ClassElement> toClassElementList(Map beanMap, Map colMap) throws ClassNotFoundException {
+    public List<ClassElement> getMatchedPositions(Map beanMap, Map colMap) throws ClassNotFoundException {
         final FileIndex fileIndex= new FileIndex();
 
         fileIndex.setIndex(0);
@@ -460,6 +464,11 @@ public class MapUtilServiceImpl implements MapUtilService {
         return container;
     }
 
+    /**
+     *
+     * @param map
+     * @return
+     */
     @Override
     public List<IndexedBeanMap> wrapIntoList(Map map){
 
@@ -490,7 +499,7 @@ public class MapUtilServiceImpl implements MapUtilService {
     }
 
     @Override
-    public Map getMapPositions(Map map, boolean recursive) throws IllegalAccessException, InstantiationException {
+    public Map getPositions(Map map, boolean recursive) throws IllegalAccessException, InstantiationException {
 
 
         logger.debug("Map Class:{}", map.getClass());
@@ -509,7 +518,7 @@ public class MapUtilServiceImpl implements MapUtilService {
                 Map.Entry entry=(Map.Entry) mapEntry;
 
                 if(entry.getValue() instanceof Map){
-                    resultMap.put(entry.getKey(), getMapPositions((Map) entry.getValue()));
+                    resultMap.put(entry.getKey(), getPositions((Map) entry.getValue()));
                 }else{
                     resultMap.put(entry.getKey(),index);
                 }
@@ -536,9 +545,9 @@ public class MapUtilServiceImpl implements MapUtilService {
     }
 
     @Override
-    public Map getMapPositions(Map map) throws IllegalAccessException, InstantiationException {
+    public Map getPositions(Map map) throws IllegalAccessException, InstantiationException {
 
-       return getMapPositions(map, false);
+        return getPositions(map, false);
 
     }
 
@@ -548,7 +557,7 @@ public class MapUtilServiceImpl implements MapUtilService {
 
         // TODO get Bean Positions
 
-        Map fieldPos=getFieldPositions(beanInstance);
+        Map fieldPos= getPositions(beanInstance);
 
 
         IndexedBeanMap beanMap;

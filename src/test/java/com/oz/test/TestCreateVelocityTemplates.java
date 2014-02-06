@@ -27,7 +27,7 @@ import static com.oz.utils.ResourceBeans.S_VL_ENGINE;
  * Website: <a href="http://www.orbitalzero.com">http://www.orbitalzero.com</a>
  * ***********************
  */
-public class TestCreateVelocityTemplates extends AbstractJUnit4Test{
+public class TestCreateVelocityTemplates extends AbstractJUnit4Test {
 
     public static final Logger logger= LoggerFactory.getLogger(TestCreateVelocityTemplates.class);
 

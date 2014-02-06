@@ -25,8 +25,8 @@ public abstract class AbstractJUnitTest extends TestCase{
 
     public static final Logger logger= LoggerFactory.getLogger(AbstractJUnitTest.class);
 
-    protected final String TEMPLATE_PATH="template-engine-generator/src/test/resources/templates/jasper/";
-    protected final String IMG_PATH="template-engine-generator/src/test/resources/images/";
+    protected final String TEMPLATE_PATH="src/test/resources/templates/jasper/";
+    protected final String IMG_PATH="src/test/resources/images/";
     protected final String TMP_PATH=System.getProperty("java.io.tmpdir")+"/";
     protected final Date date= new Date();
     protected ResourcesNames resources;

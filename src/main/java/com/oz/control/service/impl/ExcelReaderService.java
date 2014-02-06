@@ -45,7 +45,7 @@ public class ExcelReaderService extends AbstractReaderService implements FileRea
      *
      * @return
      */
-    public Map<String, Integer> getColPos(InputStream is){
+    public Map<String, Integer> getPositions(InputStream is){
 
         logger.debug("Getting column positions ...");
 
@@ -95,9 +95,9 @@ public class ExcelReaderService extends AbstractReaderService implements FileRea
      * @param is, Stream de datos del Archivo.
      * @param columns
      * @return Mapa con las columnas y la posicion del Archivo.
-     * @author <a href="mailto:jaehoo@gmail.com">Alberto Sánchez</a>
+     
      */
-    public Map<String, Integer> getColPosByNames(InputStream is, List<String> columns) {
+    public Map<String, Integer> getPositions(InputStream is, List<String> columns) {
 
         logger.debug("Getting Col names and positions ...");
 
@@ -260,7 +260,7 @@ public class ExcelReaderService extends AbstractReaderService implements FileRea
 //            mapCol = getColumnPositions(sheet);
 //
 //            //merge map positions
-//            List<Position> xy = getPositionsFromMapKeysVsClassFields(mapCol, mapClass, beanClass);
+//            List<Position> xy = getMatchedPositions(mapCol, mapClass, beanClass);
 //
 //            beanList = new ArrayList<T>();
 //
@@ -329,7 +329,7 @@ public class ExcelReaderService extends AbstractReaderService implements FileRea
      * @return  List de beans con las instancias inicializadas.
      * @throws ClassNotFoundException
      *
-     * @author <a href="mailto:jaehoo@gmail.com">Alberto Sánchez</a>
+     
      */
     @Override
     public  List toBeanList(InputStream is, Map<String, Object> beanMap)
@@ -359,7 +359,7 @@ public class ExcelReaderService extends AbstractReaderService implements FileRea
             mapCol = getColumnPositions(sheet);
 
             // Empatar las posiciones de las propiedades contra las posiciones de las columnas
-            List<ClassElement> positions=mapUtilService.toClassElementList(beanMap,mapCol);
+            List<ClassElement> positions=mapUtilService.getMatchedPositions(beanMap, mapCol);
 
             if(positions.size()<=0) throw new NullArgumentException("No hay objetos por recuperar");
 
