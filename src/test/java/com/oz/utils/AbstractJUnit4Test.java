@@ -13,6 +13,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -170,4 +174,27 @@ public abstract class AbstractJUnit4Test extends AbstractJUnit4SpringContextTest
 
     }
 
+    protected void writeFile(byte[] file, String fileName){
+
+        StringBuilder output= new StringBuilder();
+        output.append(PATH_TMP);
+        output.append(fileName);
+
+        //write output file
+        File salida= new File(output.toString());
+        FileOutputStream fo= null;
+        try {
+            fo = new FileOutputStream(salida);
+            fo.write(file);
+            fo.close();
+
+            logger.info("file output:{}",salida.getAbsolutePath());
+
+        } catch (FileNotFoundException e) {
+            logger.error("Cant process file:",e);
+        } catch (IOException e) {
+            logger.error("Error to persist file",e);
+        }
+
+    }
 }

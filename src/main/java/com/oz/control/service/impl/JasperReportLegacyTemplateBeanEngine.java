@@ -1,6 +1,6 @@
 package com.oz.control.service.impl;
 
-import com.oz.control.service.TemplateEngine;
+import com.oz.control.service.LegacyTemplateEngine;
 import com.oz.model.dto.TemplateData;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -24,12 +24,12 @@ import java.util.Map;
  * Time: 01:10 PM
  * To change this template use File | Settings | File Templates.
  */
-public class JasperReportTemplateBeanEngine implements TemplateEngine{
+public class JasperReportLegacyTemplateBeanEngine implements LegacyTemplateEngine {
 
     @Autowired
     protected ApplicationContext applicationContext;
 
-    private static final Logger logger = LoggerFactory.getLogger(JasperReportTemplateBeanEngine.class);
+    private static final Logger logger = LoggerFactory.getLogger(JasperReportLegacyTemplateBeanEngine.class);
 
     private boolean useDefaultPaths;
     private String defTemplatePath;

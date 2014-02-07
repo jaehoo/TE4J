@@ -39,7 +39,7 @@ public class ExcelReaderServiceTest extends AbstractJUnit4Test {
 
 
     @Before
-    public void setUo(){
+    public void setUp(){
         file = applicationContext.getResource(TEST_XLS);
     }
 

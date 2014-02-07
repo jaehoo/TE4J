@@ -1,6 +1,6 @@
 package com.oz.test;
 
-import com.oz.control.service.TemplateEngine;
+import com.oz.control.service.LegacyTemplateEngine;
 import com.oz.utils.AbstractJUnit4Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class TestCreateJasperReport extends AbstractJUnit4Test {
     public static final Logger logger= LoggerFactory.getLogger(TestCreateJasperReport.class);
 
     @javax.annotation.Resource(name=S_JASPER_ENGINE)
-    private TemplateEngine jasperEngine;
+    private LegacyTemplateEngine jasperEngine;
 
 
 

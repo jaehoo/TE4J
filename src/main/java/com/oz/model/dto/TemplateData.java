@@ -1,5 +1,6 @@
 package com.oz.model.dto;
 
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -14,6 +15,8 @@ import java.util.Map;
  */
 public class TemplateData <T>{
 
+    private File template;
+
     protected String templateName;
     protected Map<String, String> resources;
     protected String templateLoaderPath;
@@ -21,6 +24,15 @@ public class TemplateData <T>{
     protected Map<String, Object> dataModel;
     protected Object file;
     protected T BeanDataSource;
+
+
+    public File getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(File template) {
+        this.template = template;
+    }
 
     public String getTemplateName() {
         return templateName;
@@ -53,15 +65,6 @@ public class TemplateData <T>{
     public void setDataModel(Map<String, Object> dataModel) {
         this.dataModel = dataModel;
     }
-
-    public Object getFile() {
-        return file;
-    }
-
-    public void setFile(Object file) {
-        this.file = file;
-    }
-
 
     public String getImageResourcePath() {
         return imageResourcePath;

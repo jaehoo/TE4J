@@ -11,10 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -39,7 +35,7 @@ public class JasperReportTemplateEngineTest extends AbstractJUnit4Test {
     public static final Logger logger= LoggerFactory.getLogger(JasperReportTemplateEngineTest.class);
 
     @Resource(name=S_JASPER_ENGINE)
-    private JasperReportTemplateEngine jasperEngine;
+    private JasperReportLegacyTemplateEngine jasperEngine;
 
     @Test
     public void testMakeSinglePdfReport(){
@@ -141,28 +137,6 @@ public class JasperReportTemplateEngineTest extends AbstractJUnit4Test {
 
     }
 
-    private void writeFile(byte[] file, String fileName){
 
-        StringBuilder output= new StringBuilder();
-        output.append(PATH_TMP);
-        output.append(fileName);
-
-        //write output file
-        File salida= new File(output.toString());
-        FileOutputStream fo= null;
-        try {
-            fo = new FileOutputStream(salida);
-            fo.write(file);
-            fo.close();
-
-            logger.info("file output:{}",salida.getAbsolutePath());
-
-        } catch (FileNotFoundException e) {
-            logger.error("Cant process file:",e);
-        } catch (IOException e) {
-            logger.error("Error to persist file",e);
-        }
-
-    }
 
 }

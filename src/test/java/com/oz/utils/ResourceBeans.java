@@ -17,6 +17,7 @@ public class ResourceBeans {
     public static final String S_XLS_READER ="service.file.excelReader";
     public static final String S_TXT_READER ="service.file.textPlainReader";
     public static final String S_JASPER_ENGINE ="service.jasperEngine";
+    public static final String S_FT_ENGINE ="fileTemplateEngine";
     public static final String S_VL_ENGINE="utils.velocityEngine";
     public static final String S_BEAN_JASPER_ENGINE="service.beanJasperEngine";
     public static final String R_TEST_PROP ="res.map.test.properties";

@@ -16,16 +16,21 @@
 
     <!-- Jasper Report Engine -->
     <bean id="service.jasperEngine"
-          class="com.oz.control.service.impl.JasperReportTemplateEngine"
+          class="com.oz.control.service.impl.JasperReportLegacyTemplateEngine"
             p:useDefaultPaths="true"
             p:defTemplatePath="classpath:templates/jasper/"
             p:defResourcePath="classpath:images/"/>
     
     <bean id="service.beanJasperEngine"
-          class="com.oz.control.service.impl.JasperReportTemplateBeanEngine"
+          class="com.oz.control.service.impl.JasperReportLegacyTemplateBeanEngine"
           p:useDefaultPaths="true"
           p:defTemplatePath="classpath:templates/jasper/"
           p:defResourcePath="classpath:images/"/>
+
+    <bean id="fileTemplateEngine"
+          class="com.oz.control.service.PDFTemplateEngine"/>
+
+
 
     <!-- Velocity Engine template -->
     <bean id="utils.velocityEngine"

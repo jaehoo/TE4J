@@ -1,6 +1,6 @@
 package com.oz.control.service.impl;
 
-import com.oz.control.service.TemplateEngine;
+import com.oz.control.service.LegacyTemplateEngine;
 import com.oz.model.dto.TemplateData;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -26,12 +26,12 @@ import java.util.Map;
  * @autor <a href="mailto:jaehoo@gmail.com">Lic. José Alberto Sánchez</a>
  */
 @Service
-public class JasperReportTemplateEngine implements TemplateEngine{
+public class JasperReportLegacyTemplateEngine implements LegacyTemplateEngine {
 
     @Autowired
     protected ApplicationContext applicationContext;
 
-    private static final Logger logger = LoggerFactory.getLogger(JasperReportTemplateEngine.class);
+    private static final Logger logger = LoggerFactory.getLogger(JasperReportLegacyTemplateEngine.class);
 
     private boolean useDefaultPaths;
     private String defTemplatePath;

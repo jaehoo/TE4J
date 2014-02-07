@@ -1,6 +1,6 @@
 package com.oz.control.service.impl;
 
-import com.oz.control.service.TemplateEngine;
+import com.oz.control.service.LegacyTemplateEngine;
 import com.oz.model.dto.AddressDto;
 import com.oz.model.dto.BeanDataSource;
 import com.oz.model.dto.TemplateData;
@@ -10,10 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,14 +33,14 @@ public class JasperReportTemplateBeanEngineTest extends AbstractJUnit4Test {
     public static final Logger logger= LoggerFactory.getLogger(JasperReportTemplateBeanEngineTest.class);
 
     @Resource(name=S_BEAN_JASPER_ENGINE)
-    private TemplateEngine jasperBeanEngine;
+    private LegacyTemplateEngine jasperBeanEngine;
 
     @Test
     public void testMakePdfReportWithBeanDataSource(){
         Map<String,Object> reportData= new HashMap<String,Object>();
 
         reportData.put("id"      , "12345L");
-        logger.debug("report data:{}",reportData);
+
         Map resources=new LinkedHashMap();
 
         resources.put("headerSingleFormat"   , LOGO_OZ_PNG);
@@ -83,28 +79,5 @@ public class JasperReportTemplateBeanEngineTest extends AbstractJUnit4Test {
 
     }
 
-    private void writeFile(byte[] file, String fileName){
-
-        StringBuilder output= new StringBuilder();
-        output.append(PATH_TMP);
-        output.append(fileName);
-
-        //write output file
-        File salida= new File(output.toString());
-        FileOutputStream fo= null;
-        try {
-            fo = new FileOutputStream(salida);
-            fo.write(file);
-            fo.close();
-
-            logger.info("file output:{}",salida.getAbsolutePath());
-
-        } catch (FileNotFoundException e) {
-            logger.error("Cant process file:",e);
-        } catch (IOException e) {
-            logger.error("Error to persist file",e);
-        }
-
-    }
 
 }
